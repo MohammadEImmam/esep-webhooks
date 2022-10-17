@@ -1,34 +1,8 @@
-﻿using System.Text;
-using Newtonsoft.Json;
-using Amazon.Lambda.Core;
-// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
-
-[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
-namespace esep_webhooks;
-
-public class Function
+﻿static int Main(String[] args)
 {
-    /// <summary>
-    /// A simple function that takes a string and does a ToUpper
-    /// </summary>
-    /// <param name="input"></param>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public string FunctionHandler(object input, ILambdaContext context)
-    {
-        dynamic json = JsonConvert.DeserializeObject<dynamic>(input.ToString());
-        
-        string payload = $"{{'text':'Issue Created: {json.issue.html_url}'}}";
-
-        var client = new HttpClient();
-        var webRequest = new HttpRequestMessage(HttpMethod.Post, "{do not check in this URL}")
-        {
-            Content = new StringContent(payload, Encoding.UTF8, "application/json")
-        };
-
-        var response = client.Send(webRequest);
-        using var reader = new StreamReader(response.Content.ReadAsStream());
-            
-        return reader.ReadToEnd();
-    }
+  
+    Console.WriteLine("Main Method");
+  
+    // for successful execution of code
+    return 0;
 }
